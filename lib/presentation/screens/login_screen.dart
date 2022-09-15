@@ -138,8 +138,7 @@ class _LoginButton extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  shadowColor: Colors.red,
-                  primary: Colors.redAccent,
+                  backgroundColor: Colors.redAccent,
                 ),
                 onPressed: () {
                   context.read<LoginCubit>().logInWithCredentials();

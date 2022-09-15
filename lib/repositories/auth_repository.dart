@@ -1,7 +1,7 @@
 import 'dart:async';
 
+// ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:flutterfire_ui/database.dart';
 import '/models/models.dart';
 
 class AuthRepository {
@@ -42,10 +42,7 @@ class AuthRepository {
         email: email,
         password: password,
       );
-    } on firebase_auth.FirebaseAuthException catch (e) {
-      print('Failed with error code: ${e.code}');
-      print(e.message);
-    }
+    } catch (_) {}
   }
 
   Future<void> logOut() async {
