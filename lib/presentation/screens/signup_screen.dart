@@ -155,9 +155,10 @@ class _AcceptTermsButton extends StatelessWidget {
       bloc: context.read<SignupCubit>(),
       builder: (context, state) {
         return Checkbox(
-          value: state.acceptTerms,
+          tristate: false,
+          value: context.read<SignupCubit>().state.acceptTerms,
           onChanged: (value) {
-            context.read<SignupCubit>().acceptTermsChanged(value);
+            context.read<SignupCubit>().acceptTermsChanged(value!);
           },
         );
       },

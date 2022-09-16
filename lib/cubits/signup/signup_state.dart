@@ -9,7 +9,7 @@ class SignupState extends Equatable {
   final bool acceptTerms;
   final SignupStatus status;
 
-  SignupState({
+  const SignupState({
     required this.email,
     required this.password,
     required this.rePassword,
@@ -18,7 +18,7 @@ class SignupState extends Equatable {
   });
 
   factory SignupState.initial() {
-    return SignupState(
+    return const SignupState(
       email: '',
       password: '',
       rePassword: '',

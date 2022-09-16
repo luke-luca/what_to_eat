@@ -40,18 +40,20 @@ class SignupCubit extends Cubit<SignupState> {
   void acceptTermsChanged(bool? value) {
     emit(
       state.copyWith(
-        acceptTerms: value,
+        acceptTerms: value ?? false,
         status: SignupStatus.initial,
       ),
     );
   }
 
   Future<void> signupFormSubmitted() async {
-    if (state.status == SignupStatus.submitting) return;
-    emit(state.copyWith(status: SignupStatus.submitting));
-    if (state.password != state.rePassword) {
+    if (state.email.isEmpty ||
+        state.password.isEmpty ||
+        state.rePassword.isEmpty ||
+        state.acceptTerms == false) {
       emit(state.copyWith(status: SignupStatus.error));
     } else {
+      emit(state.copyWith(status: SignupStatus.submitting));
       try {
         await _authRepository.signup(
           email: state.email,
