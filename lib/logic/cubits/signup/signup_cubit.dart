@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:what_to_eat/utils/validators.dart';
 
 import '/repositories/repositories.dart';
 
@@ -37,21 +38,40 @@ class SignupCubit extends Cubit<SignupState> {
     );
   }
 
-  void acceptTermsChanged(bool? value) {
+  void acceptTermsChanged(bool value) {
     emit(
       state.copyWith(
-        acceptTerms: value ?? false,
+        acceptTerms: value,
         status: SignupStatus.initial,
       ),
     );
   }
 
   Future<void> signupFormSubmitted() async {
-    if (state.email.isEmpty ||
-        state.password.isEmpty ||
-        state.rePassword.isEmpty ||
-        state.acceptTerms == false) {
-      emit(state.copyWith(status: SignupStatus.error));
+    if (Validators.validateEmail(state.email) == null) {
+      emit(
+        state.copyWith(
+          status: SignupStatus.error,
+        ),
+      );
+    } else if (Validators.validatePassword(state.password) == null) {
+      emit(
+        state.copyWith(
+          status: SignupStatus.error,
+        ),
+      );
+    } else if (state.password != state.rePassword) {
+      emit(
+        state.copyWith(
+          status: SignupStatus.error,
+        ),
+      );
+    } else if (!state.acceptTerms) {
+      emit(
+        state.copyWith(
+          status: SignupStatus.error,
+        ),
+      );
     } else {
       emit(state.copyWith(status: SignupStatus.submitting));
       try {

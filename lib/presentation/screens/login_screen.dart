@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:what_to_eat/logic/cubits/cubits.dart';
 import 'package:what_to_eat/presentation/screens/forget_screen.dart';
 import 'package:what_to_eat/presentation/screens/screens.dart';
 
-import '/cubits/cubits.dart';
 import '/repositories/repositories.dart';
 
 class LoginScreen extends StatelessWidget {

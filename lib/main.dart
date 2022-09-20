@@ -1,15 +1,23 @@
+import 'dart:io';
+
 import 'package:flow_builder/flow_builder.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:what_to_eat/bloc_observer.dart';
-import 'package:what_to_eat/blocs/app/app_bloc.dart';
+import 'package:what_to_eat/logic/blocs/blocs.dart';
 import 'package:what_to_eat/presentation/router/app_router.dart';
 
 import 'repositories/repositories.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ByteData data =
+      await PlatformAssetBundle().load('assets/ca/lets-encrypt-r3.pem');
+  SecurityContext.defaultContext
+      .setTrustedCertificatesBytes(data.buffer.asUint8List());
   await Firebase.initializeApp();
   final authRepository = AuthRepository();
   runApp(App(authRepository: authRepository));
@@ -48,9 +56,11 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FlowBuilder<AppStatus>(
-          state: context.select((AppBloc bloc) => bloc.state.status),
-          onGeneratePages: onGenerateAppViewPages),
+      home: SafeArea(
+        child: FlowBuilder<AppStatus>(
+            state: context.select((AppBloc bloc) => bloc.state.status),
+            onGeneratePages: onGenerateAppViewPages),
+      ),
     );
   }
 }

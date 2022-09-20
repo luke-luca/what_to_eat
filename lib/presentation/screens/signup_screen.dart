@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '/cubits/cubits.dart';
+import 'package:what_to_eat/logic/cubits/cubits.dart';
 import '/repositories/repositories.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -151,12 +150,11 @@ class _AcceptTermsButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
-      bloc: context.read<SignupCubit>(),
+    return BlocBuilder<SignupCubit, SignupState>(
       builder: (context, state) {
         return Checkbox(
           tristate: false,
-          value: context.read<SignupCubit>().state.acceptTerms,
+          value: state.acceptTerms,
           onChanged: (value) {
             context.read<SignupCubit>().acceptTermsChanged(value!);
           },
